@@ -2,14 +2,19 @@ from beanie import init_beanie, PydanticObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
 from typing import Optional, Any, List
 from pydantic import BaseSettings, BaseModel
+from dotenv import load_dotenv
+import os
 from models.users import User
 from models.events import Event
 
+load_dotenv()
+
 class Settings(BaseSettings):
     DATABASE_URL: Optional[str] = None
+    SECRET_KEY: str = os.getenv('SECRET_KEY')
 
     async def initialize_database(self):
-        client = AsyncIOMotorClient('mongodb://root:root@localhost:27017')
+        client = AsyncIOMotorClient(os.getenv('DATABASE_URL'))
         await init_beanie(database=client.db_name, document_models=[Event, User])
 
 class Database:

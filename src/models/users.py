@@ -20,14 +20,6 @@ class User(Document):
     class Settings:
         name = 'users'
 
-class UserSignIn(BaseModel):
-    email: EmailStr
-    password: str
-
-    class Config:
-        schema_extra = {
-            'example': {
-                'email': 'fastapi@gmail.com',
-                'password': 'strong'
-            }
-        }
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str

@@ -13,9 +13,12 @@ class Settings(BaseSettings):
     DATABASE_URL: Optional[str] = None
     SECRET_KEY: str = os.getenv('SECRET_KEY')
 
-    async def initialize_database(self):
+    async def initialize_database(self, env: str = 'dev'):
         client = AsyncIOMotorClient(os.getenv('DATABASE_URL'))
-        await init_beanie(database=client.db_name, document_models=[Event, User])
+        database = client.db_name
+        if env == 'test':
+            database = client.test_db
+        await init_beanie(database=database, document_models=[Event, User])
 
 class Database:
     def __init__(self, model):

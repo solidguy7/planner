@@ -4,4 +4,4 @@ Test coverage with PyTest
 
 Entirely ready for deploying
 
-Stack: FastAPI, MongoDB, PyTest
+Stack: FastAPI, MongoDB, PyTest, Docker, Docker-Compose
